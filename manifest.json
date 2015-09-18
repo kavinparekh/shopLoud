@@ -1,0 +1,35 @@
+{
+  "name": "ShopLoud",
+  "version": "2.0",
+  "permissions": [
+    "<all_urls>","tabs"
+  ],
+  "background": {
+    "page":"background.html",
+    "persistent": true
+  },
+  "browser_action": {
+	    "default_title": "Chat with friends!"
+	  },
+   "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css":["assets/style/chat_box.css","assets/style/friend_list_viewer.css","assets/style/login_menu.css"],
+      "js": ["friend_list_viewer.js","message.js","chat_box.js","friend_manager.js","event_manager.js","interface_manager.js","chat_manager.js","lib/social/facebook/sdk.js","lib/social/facebook/fb.js","lib/base64.js","lib/xmpp/strophe.js","lib/xmpp/bosh.js","lib/websocket.js","lib/sha1.js","lib/md5.js","lib/jquery.js","basic.js","init.js"]
+    },
+    {
+      "run_at" : "document_start",
+      "matches": ["http://localhost/*"],
+      "js":["receive_login.js"]
+
+    }
+
+  ],
+  "externally_connectable": {
+  "matches": ["*://localhost/*"]
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
+  "web_accessible_resources": ["templates/*","images/*"]
+}
+

@@ -1,0 +1,58 @@
+<div class="shout_box">
+  <script>
+  //toggle hide/show shout box
+	$(".mini_btn").click(function (e) {
+		//get CSS display state of .toggle_chat element
+		var toggleState = $('.toggle_chat').css('display');
+
+		//toggle show/hide chat box
+		$('.toggle_chat').slideToggle();
+
+		//use toggleState var to change close/open icon image
+		if(toggleState == 'block')
+		{
+			$(".header .mini_btn").attr('class', 'open_btn');
+		}else{
+			$(".header .open_btn").attr('class', 'mini_btn');
+		}
+
+
+	});
+
+  $(".close_btn").click(function (e){
+		var chat_window = $(this).closest(".chat_window")
+		var cw_id = chat_window.attr('id')
+		em.trigger('chatWindowClosed',cw_id)
+		$(this).closest('.shout_box').remove();
+	});
+
+//method to trigger when user hits enter key
+	
+	
+	$(".shout_message").keypress(function (evt){
+	  console.log('here')
+		if(evt.which == 13 && $(this).val()!= '') {
+				var imessage = $(this).val();
+				var chat_window = $(this).closest(".chat_window")
+				var cw_id = chat_window.attr('id')
+				console.log(cw_id+imessage)
+				em.trigger('requestToSendMessage',{cw_id:cw_id,text:imessage})
+			  //reset value of message box
+				$(this).val('');
+		}
+	});
+console.log('functions present')
+</script>
+<div class="header">${friendName}
+	<div class="close_btn" id="close_btn" onclick="close()">&nbsp;</div>
+	<!--<div class="mini_btn">&nbsp;</div>-->
+	<!--<div class="add_btn">&nbsp;</div>-->
+	<div class="done_btn">&nbsp;</div>
+</div>
+	<div class="toggle_chat">
+  <div class="message_box"></div>
+    <div class="user_info">
+   <input class="shout_message" name="shout_message" id="shout_message" type="text" placeholder="Type Message Hit Enter" maxlength="100">
+    </div>
+    </div>
+</div>
